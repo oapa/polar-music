@@ -1,7 +1,7 @@
 import csv
 from music21 import *
 
-c = converter.parse('Sonate_No._14_Moonlight_3rd_Movement.xml')
+c = converter.parse('../../data/raw/Sonate_No._14_Moonlight_3rd_Movement.xml')
 # print(c)
 # staff1 = c[4].elements
 # staff2 = c[5].elements
@@ -15,7 +15,7 @@ c = converter.parse('Sonate_No._14_Moonlight_3rd_Movement.xml')
 
 FIELDNAMES = ['instrument', 'staff', 'measureNumber', 'offset', 'duration', 'frequency', 'step', 'octave']
 OUT_DICT = dict()
-OUT_FILE = open('moonlight.csv', 'w')
+OUT_FILE = open('../../data/processed/moonlight.csv', 'w')
 
 csvwriter = csv.DictWriter(OUT_FILE, fieldnames=FIELDNAMES, extrasaction='ignore')
 csvwriter.writeheader()
@@ -24,7 +24,7 @@ for staff in c.parts:
     OUT_DICT['instrument'] = staff.getInstrument().instrumentName
     for note in staff.recurse().notesAndRests.stream():
         OUT_DICT['measureNumber'] = note.measureNumber
-        OUT_DICT['offset'] = note.offset
+        OUT_DICT['offset'] = float(note.offset)
         OUT_DICT['duration'] = note.duration.quarterLength
         if(note.isNote):
             OUT_DICT['frequency'] = note.pitch.frequency
