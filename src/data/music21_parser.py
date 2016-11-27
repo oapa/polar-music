@@ -1,7 +1,8 @@
 import csv
 from music21 import *
+import sys
 
-c = converter.parse('../../data/raw/Sonate_No._14_Moonlight_3rd_Movement.xml')
+c = converter.parse(sys.argv[1])
 # print(c)
 # staff1 = c[4].elements
 # staff2 = c[5].elements
@@ -15,7 +16,7 @@ c = converter.parse('../../data/raw/Sonate_No._14_Moonlight_3rd_Movement.xml')
 
 FIELDNAMES = ['instrument', 'staff', 'measureNumber', 'offset', 'duration', 'frequency', 'step', 'octave']
 OUT_DICT = dict()
-OUT_FILE = open('../../data/processed/moonlight.csv', 'w')
+OUT_FILE = open(sys.argv[1][:-4]+'.csv', 'w')
 
 csvwriter = csv.DictWriter(OUT_FILE, fieldnames=FIELDNAMES, extrasaction='ignore')
 csvwriter.writeheader()
